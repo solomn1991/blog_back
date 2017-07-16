@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String,DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String,DateTime,Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -11,8 +11,9 @@ class User(Base):
     __tablename__="user"
 
     id = Column(Integer,primary_key=True,autoincrement=True)
-    username = Column(String)
+    username = Column(String,unique=True)
     password = Column(String)
+    email = Column(String)
     passages = relationship("Passage",backref="passages")
 
 
@@ -26,7 +27,10 @@ class Passage(Base):
     id = Column(Integer,primary_key=True)
     title = Column(String)
     content = Column(String)
-    user = Column(Integer,ForeignKey('user.id'))
+    user_id = Column(Integer,ForeignKey('user.id'))
     create_date = Column(DateTime,default=datetime.datetime.now())
+    is_publish = Column(Boolean,default=False)
+
+    user = relationship("User",foreign_keys="Passage.user_id")
 
 

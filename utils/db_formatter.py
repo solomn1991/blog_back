@@ -1,8 +1,14 @@
+import datetime
 
 def format_row(record):
     d = {}
     for column in record.__table__.columns:
-        d[column.name] = str(getattr(record, column.name))
+        value = getattr(record, column.name)
+
+        if isinstance(value,datetime.datetime):
+            value = str(value)[:19]
+
+        d[column.name] = value
     return d
 
 
