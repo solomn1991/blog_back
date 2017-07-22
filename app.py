@@ -66,6 +66,7 @@ def add_passage():
         result = {"add_passage_success":False,"message":"请先登录"}
         return json.dumps(result)
 
+
     user_id = session["user"].get("id");
     content = request.json.get("content")
     title = request.json.get("title")
